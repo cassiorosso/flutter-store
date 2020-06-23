@@ -63,7 +63,7 @@ class ProductScreen extends StatelessWidget {
               padding: EdgeInsets.all(6),
               color: Theme.of(context).primaryColor,
               child: Text(
-                'Descrição',
+                'Description',
                 style: TextStyle(
                     fontSize: 22,
                     fontWeight: FontWeight.bold,

@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_store/controllers/signup-controller.dart';
 import 'package:flutter_store/utils/user-validator.dart';
-import 'package:flutter_store/view/widgets/custom-dialogs.dart';
 
 class SignUpScreen extends StatelessWidget with UserValidator {
-  final _dialogs = CustomDialogs();
   final _controller = SignUpController();
   final _formKey = GlobalKey<FormState>();
   @override
@@ -58,10 +56,13 @@ class SignUpScreen extends StatelessWidget with UserValidator {
       validator: validatePassword,
       autofocus: false,
       obscureText: true,
+      style: TextStyle(color: Colors.green),
       decoration: InputDecoration(
+        focusColor: Colors.black,
         hintText: 'Password',
         contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(32.0)),
       ),
     );
 
@@ -73,16 +74,11 @@ class SignUpScreen extends StatelessWidget with UserValidator {
         onPressed: () async{
           if(_formKey.currentState.validate())
           {_formKey.currentState.save();
-          _dialogs.showLoadingDialog(context);
           String result = await _controller.createUser();
-          if(result != "OK") {
-            Navigator.pop(context);
-            _dialogs.showMessageDialog(context, "Erro", result.toString());
-            }
-          else{
-            Navigator.pop(context);  
+          if(result == "OK") {
             Navigator.pushReplacementNamed(context, '/home');
-            }}
+            }
+            }
         },
         padding: EdgeInsets.all(12),
         color: Colors.orange[300],
@@ -90,7 +86,6 @@ class SignUpScreen extends StatelessWidget with UserValidator {
       );
 
     return Scaffold(
-      backgroundColor: Colors.white,
       body: Form(
         key: _formKey,
           child: Center(

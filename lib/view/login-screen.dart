@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_store/controllers/login-controller.dart';
 import 'package:flutter_store/utils/user-validator.dart';
-import 'package:flutter_store/view/widgets/custom-dialogs.dart';
 
 class LoginScreen extends StatelessWidget with UserValidator {
   final String savedEmail;
   final _formKey = GlobalKey<FormState>();
   final _controller = LoginController();
-  final _dialogs = CustomDialogs();
 
   LoginScreen({Key key, this.savedEmail}) : super(key: key);
 
@@ -63,14 +61,9 @@ class LoginScreen extends StatelessWidget with UserValidator {
         ),
         onPressed: () async {
           if (_formKey.currentState.validate()) {
-            _dialogs.showLoadingDialog(context);
             _formKey.currentState.save();
             String result = await _controller.loginUser();
-            if (result != 'OK') {
-              Navigator.pop(context);
-              _dialogs.showMessageDialog(context, "Erro", result);
-            } else {
-              Navigator.pop(context);
+            if (result != null) {
               _controller.saveEmail(savedEmail);
               Navigator.pushReplacementNamed(context, '/home');
             }

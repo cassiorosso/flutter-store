@@ -6,8 +6,10 @@ import 'package:flutter_store/controllers/orders-controller.dart';
 import 'package:flutter_store/controllers/products-controller.dart';
 import 'package:flutter_store/controllers/user-controller.dart';
 import 'package:flutter_store/repositories/nodestr-repository.dart';
-import 'package:flutter_store/repositories/shared-preferences-repository.dart';
+import 'package:flutter_store/services/shared-preferences-service.dart';
 import 'package:flutter_store/stores/user-store.dart';
+import 'package:flutter_store/utils/dialog-factory.dart';
+import 'package:flutter_store/utils/global-scaffold.dart';
 import 'package:flutter_store/view/cart-screen.dart';
 import 'package:flutter_store/view/confirmedOrder.dart';
 import 'package:flutter_store/view/home-screen.dart';
@@ -19,20 +21,24 @@ import 'package:flutter_store/view/signup-screen.dart';
 import 'package:flutter_store/view/splash-screen.dart';
 import 'package:get_it/get_it.dart';
 
+import 'interfaces/nodestr-interface.dart';
+
 void main() {
+
   WidgetsFlutterBinding.ensureInitialized();
   GetIt getIt = GetIt.instance;
+
+  //Register Singletons
   getIt.registerSingleton<Dio>(Dio());
-  getIt.registerSingleton<NodeStrRepository>(
-      NodeStrRepository(getIt.call<Dio>()));
-  getIt.registerSingleton<SharedPreferencesRepository>(
-      SharedPreferencesRepository());
+  getIt.registerSingleton<INodeStr>(NodeStrRepository(getIt.call<Dio>()));
+  getIt.registerSingleton<SharedPreferencesService>(SharedPreferencesService());
   getIt.registerLazySingleton<UserStore>(() => UserStore());
   getIt.registerSingleton<UserController>(UserController());
   getIt.registerLazySingleton<ProductsController>(() => ProductsController());
   getIt.registerLazySingleton<CartController>(() => CartController());
   getIt.registerLazySingleton<OrdersController>(() => OrdersController());
-
+  getIt.registerSingleton<GlobalScaffold>(GlobalScaffold());
+  
   runApp(MyApp());
 }
 
@@ -44,7 +50,15 @@ class MyApp extends StatelessWidget {
       return MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Flutter E-Commerce',
-        theme: _userController.themeApp,
+        navigatorKey: DialogFactory.navigatorKey,
+        theme: _userController.themeApp,          //Dark or light mode
+        builder: (context, child){
+          final _globalScaffold = GetIt.I.call<GlobalScaffold>();
+          return Scaffold(
+            key: _globalScaffold.scaffKey,
+            body: child,
+          );
+        },
         initialRoute: '/',
         routes: {
           '/': (context) => SplashScreen(),
@@ -65,17 +79,3 @@ class MyApp extends StatelessWidget {
     });
   }
 }
-
-
-// void initDio()async{
-//  Dio dio = new Dio(); // with default Options
-
-//   // Set default configs
-//    dio.options.baseUrl = "http://192.168.1.111:3000";
-//   // dio.options.connectTimeout = 5000; //5s
-//   // dio.options.receiveTimeout = 3000;
-
-//     Response response = await dio.get("/").catchError((onError)=>print(onError));
-//     print(response.data.toString());
-
-// }

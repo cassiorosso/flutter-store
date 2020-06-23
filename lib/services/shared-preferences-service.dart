@@ -1,6 +1,6 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
-class SharedPreferencesRepository {
+class SharedPreferencesService {
   static const THEME_STATUS = "THEMESTATUS";
 
   Future<void> addEmail(String email) async {
@@ -10,17 +10,18 @@ class SharedPreferencesRepository {
 
   Future<String> getSavedEmail() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    //Return String
     return prefs.getString('stringValue');
   }
 
-  setDarkTheme(bool value) async {
+  Future<void> setDarkTheme(bool value) async {  // Dark(true) or ligth(false) mode
     SharedPreferences prefs = await SharedPreferences.getInstance();
+    // print(prefs.getBool(THEME_STATUS));
     prefs.setBool(THEME_STATUS, value);
   }
 
   Future<bool> getTheme() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
+    // print(prefs.getBool(THEME_STATUS));
     return prefs.getBool(THEME_STATUS) ?? false;
   }
 }

@@ -32,7 +32,7 @@ class CustomDialogs {
         return AlertDialog(
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
           title: Text(
-            "Carregando...",
+            "Please wait...",
             textAlign: TextAlign.center,
           ),
           content: SizedBox(

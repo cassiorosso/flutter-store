@@ -7,6 +7,7 @@ abstract class _PaymentControllerBase with Store {
 
   @observable
   String paymentMethod = "null";
+  List paymentGroup = ["money", "card", "pick", "null"];
 
   @action 
   void choosePayment(int i){

@@ -1,9 +1,9 @@
-import 'package:flutter_store/repositories/shared-preferences-repository.dart';
+import 'package:flutter_store/services/shared-preferences-service.dart';
 import 'package:get_it/get_it.dart';
 
 class SplashController{
 
-  final _sharedRepository = GetIt.I.call<SharedPreferencesRepository>();
+  final _sharedRepository = GetIt.I.call<SharedPreferencesService>();
   String savedEmail = '';
 
   SplashController(){

@@ -37,17 +37,10 @@ class OrderScreen extends StatelessWidget {
                       return Row(
                         children: <Widget>[
                           Container(
-                            decoration: BoxDecoration(
-                              color: Colors.grey[300],
-                              border: Border.all(color: Colors.grey),
-                            ),
                             height: 70,
                             width: 70,
                             child: Center(
-                                child: Icon(
-                              Icons.pages,
-                              color: Colors.green,
-                            )),
+                                child: Image.asset("images/product-icon.png", fit: BoxFit.contain)),
                           ),
                           SizedBox(width: 20),
                           Column(
@@ -74,7 +67,7 @@ class OrderScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: <Widget>[
                     Icon(
-                      Icons.motorcycle,
+                      Icons.attach_money,
                       size: 26,
                     ),
                     Text("  Shipment - ", style: TextStyle(fontSize: 18)),
@@ -95,7 +88,19 @@ class OrderScreen extends StatelessWidget {
                     style: TextStyle(
                         color: Colors.green[600],
                         fontSize: 22,
-                        fontWeight: FontWeight.w800))
+                        fontWeight: FontWeight.w800)),
+                        Divider(),
+                SizedBox(height: 20),
+                        Text(
+                  "Payment Method",
+                  style: TextStyle(fontSize: 18),
+                  textAlign: TextAlign.start,
+                ),
+                Text(order.paymentMethod?? "money",
+                    style: TextStyle(
+                        color: Colors.green[600],
+                        fontSize: 18,
+                        fontWeight: FontWeight.w600))
               ],
             ),
           )),

@@ -56,6 +56,14 @@ flutter:
   assets:
     - images/splash_screen.png
     - images/logo.png
+    - images/empty-cart.png
+    - images/wrong-connection.jpg
+    - images/empty-orders.png
+    - images/product-icon.png
+    - images/money-icon.png
+    - images/card-icon.png
+    - images/store-icon.png
+
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
 

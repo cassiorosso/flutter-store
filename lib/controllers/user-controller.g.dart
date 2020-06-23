@@ -43,17 +43,11 @@ mixin _$UserController on _UserControllerBase, Store {
     }, _$themeAppAtom, name: '${_$themeAppAtom.name}_set');
   }
 
-  final _$_UserControllerBaseActionController =
-      ActionController(name: '_UserControllerBase');
+  final _$setThemeDataAsyncAction = AsyncAction('setThemeData');
 
   @override
-  dynamic setThemeData() {
-    final _$actionInfo = _$_UserControllerBaseActionController.startAction();
-    try {
-      return super.setThemeData();
-    } finally {
-      _$_UserControllerBaseActionController.endAction(_$actionInfo);
-    }
+  Future setThemeData() {
+    return _$setThemeDataAsyncAction.run(() => super.setThemeData());
   }
 
   @override

@@ -12,7 +12,10 @@ class ProductsScreen extends StatelessWidget {
       slivers: <Widget>[
         SliverAppBar(
           flexibleSpace: FlexibleSpaceBar(
-            background: Image.network('https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSWMU35DYVmLOuoQfVoQrkZMt2grLE6D88BB2v_0PoB7lN5KtTE&usqp=CAU', fit: BoxFit.cover,),
+            background: Image.network(
+              'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSWMU35DYVmLOuoQfVoQrkZMt2grLE6D88BB2v_0PoB7lN5KtTE&usqp=CAU',
+              fit: BoxFit.cover,
+            ),
           ),
           snap: true,
           floating: true,
@@ -20,8 +23,9 @@ class ProductsScreen extends StatelessWidget {
           //backgroundColor: Colors.red[300],
         ),
         Observer(builder: (_) {
-          if(_controller.products == null)
-            return SliverToBoxAdapter(child: Column(
+          if (_controller.products == null && _controller.isLoading == true)
+            return SliverToBoxAdapter(
+                child: Column(
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
@@ -29,8 +33,21 @@ class ProductsScreen extends StatelessWidget {
                 Center(child: CircularProgressIndicator()),
               ],
             ));
-          if(_controller.products.isEmpty)
-            return SliverToBoxAdapter(child: Column(
+          else if (_controller.products == null &&
+              _controller.isLoading == false)
+            return SliverToBoxAdapter(
+                child: Column(
+              children: <Widget>[
+                Image.asset("images/wrong-connection.jpg", fit: BoxFit.cover, scale: .5,),
+                IconButton(icon: Icon(Icons.refresh, color: Colors.blue,), onPressed: (){
+                  _controller.getProducts();
+                }),
+                Text("Refresh", style: TextStyle(color: Colors.blue),)
+              ],
+            ));
+          else if (_controller.products.isEmpty)
+            return SliverToBoxAdapter(
+                child: Column(
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
@@ -39,14 +56,12 @@ class ProductsScreen extends StatelessWidget {
               ],
             ));
           else
-             return SliverGrid(
+            return SliverGrid(
                 delegate: SliverChildBuilderDelegate((context, index) {
                   return ProductCard(_controller.products[index]);
-                },
-                childCount: _controller.products.length),
+                }, childCount: _controller.products.length),
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2
-                ));
+                    crossAxisCount: 2));
         })
       ],
     );

@@ -9,6 +9,7 @@ class OrderModel {
     List<CartModel> items;
     double totalPrice;
     double shipPrice;
+    String paymentMethod;
 
     OrderModel({
         this.status,
@@ -17,7 +18,8 @@ class OrderModel {
         this.number,
         this.items,
         this.totalPrice,
-        this.shipPrice
+        this.shipPrice,
+        this.paymentMethod
     });
 
     factory OrderModel.fromJson(Map<String, dynamic> json) => OrderModel(
@@ -27,14 +29,8 @@ class OrderModel {
         shipPrice: json["shipPrice"].toDouble(),
         customer: CustomerModel.fromJson(json["customer"]),
         number: json["number"],
+        paymentMethod: json["paymentMethod"]?? "money",
         items: List<CartModel>.from(json["items"].map((x) => CartModel.fromJson(x))),
     );
 
-    // Map<String, dynamic> toJson() => {
-    //     "status": status,
-    //     "_id": id,
-    //     "customer": customer.toJson(),
-    //     "number": number,
-    //     "items": List<dynamic>.from(items.map((x) => x.toJson())),
-    // };
 }

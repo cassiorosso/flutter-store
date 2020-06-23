@@ -24,13 +24,9 @@ class OrderCard extends StatelessWidget {
                 padding: EdgeInsets.all(4),
                 width: MediaQuery.of(context).size.width * 0.2,
                 decoration: BoxDecoration(
-                    border: Border.all(color: Colors.black26),
+                    border: Border.all(color: Colors.white),
                     borderRadius: BorderRadius.circular(5)),
-                child: Icon(
-                  Icons.local_grocery_store,
-                  size: 40,
-                  color: Colors.blueGrey,
-                ),
+                child: Image.asset("images/empty-orders.png", fit: BoxFit.contain)
               ),
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
