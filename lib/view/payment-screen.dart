@@ -34,7 +34,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                     final _ordersController = GetIt.I.call<OrdersController>();
                     _cartController.cleanCart();
                     _ordersController.getOrders();
-                    Navigator.pushReplacementNamed(context, "/confirmedOrder");
+                    Navigator.pushNamedAndRemoveUntil(context, "/confirmedOrder",(Route<dynamic> route) => false,);
                   }
               },
       ),
